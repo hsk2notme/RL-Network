@@ -35,6 +35,8 @@ Dần dần, qua nhiều lần lặp lại, chú chó bắt đầu nhận ra m�
 
         + Phần thưởng (Reward, R): Là tín hiệu phản hồi tức thời mà môi trường gửi cho tác tử sau khi nó thực hiện một hành động. Phần thưởng là một giá trị số, cho biết hành động vừa rồi tốt (phần thưởng dương), xấu (phần thưởng âm), hay trung tính (0). Việc thiết kế hàm phần thưởng (reward function) là một bước cực kỳ quan trọng, vì nó định hình hành vi của tác tử và hướng nó tới mục tiêu cuối cùng mà con người mong muốn.
 
+        + Xác suất chuyển đổi (Transition Probabilities - P): Đây là nơi quyết định xem tác tử A sẽ lựa chọn trạng thái S nào để đến.
+
 
 ====>>>> QUY TRÌNH TẠO NÊN REINFORCEMENT LEARNING:
 
@@ -42,3 +44,8 @@ Dần dần, qua nhiều lần lặp lại, chú chó bắt đầu nhận ra m�
          2. Dựa trên trạng thái St, tác tử thực hiện một hành động At.
          3. Môi trường chuyển sang một trạng thái mới St+1 và gửi lại cho tác tử một phần thưởng Rt+1
          4. Tác tử sử dụng các thông tin đã có xuất phát từ thời điểm t để cập nhật kiến thức của mình -> Học máy
+
+MỤC TIÊU CẦN HƯỚNG ĐẾN: tối đa hóa tổng phần thưởng tích lũy trong dài hạn "lợi tức" (return).   
+
+
+===>>
