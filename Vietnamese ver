@@ -1,0 +1,44 @@
+Học tăng cường (Reinforcement Learning) là một kỹ thuật của học máy (Machine Learning) giúp phần mềm tự động đưa ra quyết định nhằm tối ưu hóa kết quả. 
+Phương pháp này mô phỏng cách con người học hỏi thông qua thử và sai để đạt được mục tiêu đã đề ra. 
+RL hướng dẫn phần mềm ưu tiên những hành động có lợi cho mục tiêu, đồng thời hạn chế các hành động không cần thiết hoặc gây xao nhãng.
+
+=== VÍ DỤ TRỰC QUAN THỰC TẾ VỀ RL
+
+Hãy tưởng tượng bạn là người huấn luyện và chú chó là người học. Bạn đưa ra lệnh "ngồi". Chú chó, không hiểu ngôn ngữ của bạn, có thể sẽ thực hiện một loạt các hành động ngẫu nhiên: nó có thể sủa, chạy vòng quanh, hoặc tình cờ ngồi xuống. Khi nó thực hiện đúng hành động mong muốn—ngồi xuống—bạn ngay lập tức thưởng cho nó một miếng bánh. Ngược lại, nếu nó làm sai, bạn có thể nói "Không" hoặc đơn giản là không thưởng.
+
+Dần dần, qua nhiều lần lặp lại, chú chó bắt đầu nhận ra một mối liên hệ: hành động "ngồi" sau khi nghe lệnh sẽ dẫn đến một kết quả tích cực (miếng bánh). Nó học được điều này không phải vì bạn giải thích cho nó quy tắc, mà hoàn toàn thông qua quá trình thử và sai, và nhận phản hồi trực tiếp từ môi trường (chính là bạn). Nó học cách tối đa hóa phần thưởng (số miếng bánh nhận được) theo thời gian.
+
+Đây chính xác là cách Học tăng cường hoạt động. Trong phép tương tự này:
+
+        + Chú chó chính là Tác tử (Agent): thực thể học hỏi và đưa ra quyết định.
+
+        + Ngôi nhà và bạn là Môi trường (Environment): thế giới mà tác tử tương tác.
+
+        + Lệnh "ngồi" của bạn tương ứng với một Trạng thái (State): một tình huống cụ thể mà tác tử quan sát được.
+
+        + Hành động ngồi xuống hoặc chạy đi của chú chó là Hành động (Action): lựa chọn mà tác tử thực hiện.
+
+        + Miếng bánh thưởng là Phần thưởng (Reward): tín hiệu phản hồi tích cực.
+
+        + Lời nói "Không" là Hình phạt (Penalty), hay phần thưởng âm: tín hiệu phản hồi tiêu cực.
+
+
+==>> Các thành tố cốt lõi rút ra: 
+
+        + Tác tử (Agent): Đây là "bộ não" của hệ thống, là thuật toán hoặc chương trình phần mềm đưa ra quyết định. Tác tử quan sát trạng thái của môi trường và chọn một hành động để thực hiện. Ví dụ về tác tử bao gồm chương trình AlphaGo chơi cờ vây, một robot học cách đi bộ, hoặc một thuật toán giao dịch tự động trên thị trường chứng khoán.   
+
+        + Môi trường (Environment): Đây là thế giới mà tác tử tồn tại và tương tác. Môi trường có một tập hợp các quy tắc và động lực riêng, mà tác tử có thể không biết trước. Nó nhận hành động của tác tử, sau đó trả về một trạng thái mới và một tín hiệu phần thưởng. Môi trường có thể là rời rạc (discrete), như một bàn cờ với số lượng ô và nước đi hữu hạn, hoặc liên tục (continuous), như thế giới thực nơi một chiếc xe tự lái có vô số trạng thái và hành động khả dĩ.   
+
+        + Trạng thái (State, S): Là một mô tả đầy đủ về tình hình của môi trường tại một thời điểm cụ thể. Đối với một trò chơi, trạng thái là vị trí của tất cả các quân cờ. Đối với một robot, trạng thái có thể là tất cả các показания từ cảm biến của nó (vị trí, tốc độ, góc khớp).   
+
+        + Hành động (Action, A): Là một trong những lựa chọn mà tác tử có thể thực hiện tại một trạng thái nhất định. Tập hợp tất cả các hành động có thể có được gọi là "không gian hành động" (action space). Ví dụ, trong một trò chơi, đó là tất cả các nước đi hợp lệ.   
+
+        + Phần thưởng (Reward, R): Là tín hiệu phản hồi tức thời mà môi trường gửi cho tác tử sau khi nó thực hiện một hành động. Phần thưởng là một giá trị số, cho biết hành động vừa rồi tốt (phần thưởng dương), xấu (phần thưởng âm), hay trung tính (0). Việc thiết kế hàm phần thưởng (reward function) là một bước cực kỳ quan trọng, vì nó định hình hành vi của tác tử và hướng nó tới mục tiêu cuối cùng mà con người mong muốn.
+
+
+====>>>> QUY TRÌNH TẠO NÊN REINFORCEMENT LEARNING:
+
+         1. Tại thời điểm t, tác tử quan sát Trạng thái St của môi trường.
+         2. Dựa trên trạng thái St, tác tử thực hiện một hành động At.
+         3. Môi trường chuyển sang một trạng thái mới St+1 và gửi lại cho tác tử một phần thưởng Rt+1
+         4. Tác tử sử dụng các thông tin đã có xuất phát từ thời điểm t để cập nhật kiến thức của mình -> Học máy
