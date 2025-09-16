@@ -1,0 +1,41 @@
+Reward: All goals can be describe by the maximisation of expected cumulative reward.
+Agent and Environment:  
+          + At each step t the agent:
+              -  Executes action At
+              -  Receives observation Ot
+              -  Receive scalar reward Rt
+
+          + The Environment:  
+              - Receives action At
+              - Emit obs Ot
+              - Emit scalar reward Rt
+
+History and State: State is a function of the history 
+            St = f(Ht)
+
+Environment State:
+    + ES is the environment's private representation.
+    + The environment state is not usually visible to the agent
+    + Even if ES is visible -> containing irrelevent information.   
+
+Agent State:
+    + Sa(t) is the agent's internal representation.
+    + State is any  function of the history
+
+Infor State (Markov State) contains all useful information from the history 
+      Definition: A state St is Markov if and only if
+            P (St+1 | St) = P (St+1 | S1, S2,..., St)
+       => The future is independent of the past given the present.
+          => Once the state is known, the history may be thrown away
+
+Full observation Envi: agent directly observes environment state
+       `    + Ot = Sa(t) = Se(t)
+      => Markov decision process (MDP)
+
+Partially Obs Envi: agent indirectly obs envi:  
+         + Sa(t) != Se(t)
+         + Formally this is a POMDP (Partially obs MDP)
+         + Agent must construct its own state representation Sa(t) like 
+            - Complete history (Sa(t) = History t (Ht))
+            - Beliefs of environment state (Sa(t) = (P(Se(t) = s1), P(Se(t) = s2),....)
+            - Recurrent neural network (AS = o(Sa(t-1).Ws + Ot.Wo)
