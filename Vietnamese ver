@@ -29,7 +29,7 @@ Dần dần, qua nhiều lần lặp lại, chú chó bắt đầu nhận ra m�
 
         + Môi trường (Environment): Đây là thế giới mà tác tử tồn tại và tương tác. Môi trường có một tập hợp các quy tắc và động lực riêng, mà tác tử có thể không biết trước. Nó nhận hành động của tác tử, sau đó trả về một trạng thái mới và một tín hiệu phần thưởng. Môi trường có thể là rời rạc (discrete), như một bàn cờ với số lượng ô và nước đi hữu hạn, hoặc liên tục (continuous), như thế giới thực nơi một chiếc xe tự lái có vô số trạng thái và hành động khả dĩ.   
 
-        + Trạng thái (State, S): Là một mô tả đầy đủ về tình hình của môi trường tại một thời điểm cụ thể. Đối với một trò chơi, trạng thái là vị trí của tất cả các quân cờ. Đối với một robot, trạng thái có thể là tất cả các показания từ cảm biến của nó (vị trí, tốc độ, góc khớp).   
+        + Trạng thái (State, S): Là một mô tả đầy đủ về tình hình của môi trường tại một thời điểm cụ thể. Đối với một trò chơi, trạng thái là vị trí của tất cả các quân cờ. Đối với một robot, trạng thái có thể là tất cả các số liệu được phát hiện từ cảm biến của nó (vị trí, tốc độ, góc khớp). Nó được liên kết với một hàm giá trị cho trước để dự đoán phần thưởng kỳ vọng tương lai.
 
         + Hành động (Action, A): Là một trong những lựa chọn mà tác tử có thể thực hiện tại một trạng thái nhất định. Tập hợp tất cả các hành động có thể có được gọi là "không gian hành động" (action space). Ví dụ, trong một trò chơi, đó là tất cả các nước đi hợp lệ.   
 
@@ -37,8 +37,9 @@ Dần dần, qua nhiều lần lặp lại, chú chó bắt đầu nhận ra m�
 
         + Xác suất chuyển đổi (Transition Probabilities - P): Đây là nơi quyết định xem tác tử A sẽ lựa chọn trạng thái S nào để đến.
 
+        + Chính sách (Policy - O): Hướng dẫn về hành động tối ưu cần thực hiện trong một state nhất định với mục tiêu tối đa hóa reward.
 
-====>>>> QUY TRÌNH TẠO NÊN REINFORCEMENT LEARNING:
+====>>>> MÔ HÌNH QUY TRÌNH TẠO NÊN REINFORCEMENT LEARNING - căn bản:
 
          1. Tại thời điểm t, tác tử quan sát Trạng thái St của môi trường.
          2. Dựa trên trạng thái St, tác tử thực hiện một hành động At.
@@ -48,4 +49,4 @@ Dần dần, qua nhiều lần lặp lại, chú chó bắt đầu nhận ra m�
 MỤC TIÊU CẦN HƯỚNG ĐẾN: tối đa hóa tổng phần thưởng tích lũy trong dài hạn "lợi tức" (return).   
 
 
-===>>
+==> 
