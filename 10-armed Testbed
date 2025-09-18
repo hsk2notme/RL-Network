@@ -1,1 +1,78 @@
+Phân tích biểu đồ 2.2 (lí do tại sao epsilon cao thì có thể tốt trong ngắn hạn nhưng với dài hạn thì lại không được như vậy ?)
 
+1. Phương pháp ε = 0.1 (Nhà thám hiểm năng nổ 🗺️)
+Hành vi: Tác tử này dành 10% thời gian của mình để thử các hành động ngẫu nhiên (thăm dò).
+
+Ưu điểm (Ngắn hạn): Vì nó thăm dò rất tích cực, nó nhanh chóng thu thập được nhiều thông tin về tất cả các lựa chọn. Điều này giúp nó tìm ra hành động nào là tốt nhất sớm hơn. 
+Bạn có thể thấy điều này ở cả hai biểu đồ: đường màu xanh lam (ε=0.1) tăng vọt và vượt lên trên đường màu đỏ (ε=0.01) trong khoảng 250 bước đầu tiên.
+
+Nhược điểm (Dài hạn): Một khi đã tìm ra hành động tốt nhất, tác tử này vẫn bị "buộc" phải lãng phí 10% thời gian để thử những hành động khác (mà nó biết là kém hơn). 
+Việc thăm dò liên tục này ngăn cản nó tận dụng tối đa kiến thức của mình. Đây là lý do tại sao đường màu xanh lam bị chững lại (plateau) ở một mức trần:
+
+        Biểu đồ trên: Phần thưởng trung bình không thể tăng cao hơn nữa vì cứ 10 lần thì có 1 lần nó chọn hành động dưới mức tối ưu.
+        Biểu đồ dưới: Tỷ lệ chọn hành động tối ưu không bao giờ có thể vượt quá 91% (90% từ khai thác + 1% cơ hội chọn đúng hành động tối ưu trong 10% thăm dò).
+
+2. Phương pháp ε = 0.01 (Nhà khai thác kiên nhẫn 🧐)
+Hành vi: Tác tử này rất "thận trọng", chỉ dành 1% thời gian để thăm dò. Phần lớn thời gian (99%) là để khai thác lựa chọn tốt nhất mà nó biết.
+
+Nhược điểm (Ngắn hạn): Vì nó thăm dò rất ít, nó mất nhiều thời gian hơn để thu thập đủ dữ liệu và tự tin xác định đâu là hành động tốt nhất. Quá trình học hỏi của nó chậm hơn, thể hiện qua đường màu đỏ đi sau đường màu xanh ở giai đoạn đầu.
+
+Ưu điểm (Dài hạn): Một khi nó đã tìm ra được hành động tốt nhất, nó khai thác kiến thức đó một cách cực kỳ hiệu quả. Nó chỉ "lãng phí" 1% thời gian cho việc thăm dò. Điều này cho phép phần thưởng trung bình và tỷ lệ chọn hành động tối ưu của nó tiếp tục tăng trưởng một cách ổn định, hướng tới một mức trần cao hơn nhiều (99%).
+
+
+
+
+Di động giữa greedy và near-greedy
+
+Trường hợp 1: Khi phần thưởng có độ nhiễu cao (Phương sai lớn)
+"Giả sử phương sai của phần thưởng lớn hơn, chẳng hạn là 10 thay vì 1. Với các phần thưởng nhiễu hơn, cần nhiều sự thăm dò hơn..."
+
+Giải thích đơn giản: "Nhiễu" cao có nghĩa là kết quả của một hành động rất ngẫu nhiên và không ổn định.
+
+Tương tự dễ hiểu 🍜: Nhà hàng có phong độ thất thường
+
+Giả sử bạn đang chọn giữa hai nhà hàng:
+
+Quán A (ít nhiễu): Nấu ăn rất ổn định. Hầu như lúc nào bạn đến cũng được một bữa ăn 8/10 điểm.
+
+Quán B (nhiễu cao): Phong độ bếp trưởng rất thất thường. Có hôm bạn ăn được một bữa ngon xuất sắc 10/10, nhưng cũng có hôm món ăn rất tệ, chỉ 2/10. Giả sử trung bình thực sự của quán B là 9/10, tức là tốt hơn quán A.
+
+Vấn đề của Greedy: Nếu một tác tử Greedy thử quán B vào một ngày "xui xẻo" và chỉ nhận được 2/10 điểm, trong khi thử quán A và được 8/10, nó sẽ vội kết luận rằng quán A tốt hơn và không bao giờ quay lại quán B nữa. Nó đã bị sự ngẫu nhiên đánh lừa.
+
+Lợi thế của ε-greedy: Tác tử ε-greedy, do có cơ chế thăm dò, sẽ quay lại thử quán B thêm vài lần nữa. Qua nhiều lần thử, những điểm 10 và 2 sẽ cân bằng lại, giúp nó nhận ra giá trị trung bình thực sự của quán B là 9/10 và tìm ra được lựa chọn tốt nhất.
+
+Kết luận: Khi kết quả càng ngẫu nhiên, ta càng cần thăm dò nhiều hơn để không bị một vài kết quả tệ ban đầu đánh lừa. Vì vậy, ε-greedy vượt trội hơn hẳn.
+
+Trường hợp 2: Khi phần thưởng không có nhiễu (Phương sai bằng 0)
+"Nếu phương sai của phần thưởng bằng không, thì phương pháp tham lam sẽ biết giá trị thực của mỗi hành động sau khi thử nó một lần."
+
+Giải thích đơn giản: "Không nhiễu" (hay còn gọi là "tất định" - deterministic) có nghĩa là mỗi hành động luôn luôn cho ra cùng một kết quả.
+
+Tương tự dễ hiểu  vending machine: Máy bán hàng tự động
+
+Giả sử có hai máy bán hàng:
+
+Máy A: Luôn luôn cho ra lon Coca (phần thưởng = 10).
+
+Máy B: Luôn luôn cho ra lon Nước lọc (phần thưởng = 5).
+
+Vấn đề của ε-greedy: Tác tử Greedy chỉ cần thử mỗi máy một lần là biết chính xác máy nào tốt hơn. Sau đó, nó sẽ luôn chọn máy A. Bất kỳ lần thăm dò nào sau đó của tác tử ε-greedy (ví dụ, thỉnh thoảng lại chọn máy B) đều là lãng phí và làm giảm tổng phần thưởng.
+
+Kết luận: Khi kết quả là chắc chắn và không đổi, thăm dò trở nên không cần thiết sau khi đã thử hết các lựa chọn. Greedy có thể hoạt động tốt nhất.
+
+Trường hợp 3: Khi môi trường không dừng (Non-stationary) - QUAN TRỌNG NHẤT
+"Giả sử nhiệm vụ bandit là không dừng (nonstationary), tức là giá trị thực của các hành động thay đổi theo thời gian."
+
+Giải thích đơn giản: "Không dừng" có nghĩa là "luật chơi" thay đổi. Lựa chọn tốt nhất hôm nay có thể không còn là tốt nhất vào ngày mai.
+
+Tương tự dễ hiểu 👨‍🍳: Quán ăn có đầu bếp mới
+
+Ban đầu, Quán Phở (A) là ngon nhất (9/10), Quán Bún Chả (B) chỉ ở mức khá (7/10).
+
+Sau một tháng, Quán Bún Chả (B) thuê được đầu bếp mới, chất lượng tăng vọt lên 10/10. Trong khi đó, Quán Phở (A) bắt đầu đi xuống, chỉ còn 6/10.
+
+Vấn đề chí mạng của Greedy: Tác tử Greedy đã xác định quán A là tốt nhất ở giai đoạn đầu. Nó sẽ MÃI MÃI ăn ở quán A, nhận về những bữa ăn 6/10 điểm tầm thường mà không hề hay biết quán B bên cạnh đã trở thành một nơi tuyệt vời. Nó không có khả năng thích ứng với sự thay đổi.
+
+Sự cần thiết của ε-greedy: Tác tử ε-greedy, với 1% hoặc 10% thăm dò, chắc chắn sẽ thử lại quán B vào một lúc nào đó. Khi đó, nó sẽ phát hiện ra sự thay đổi ngoạn mục này, cập nhật lại kiến thức và chuyển sang lựa chọn B làm lựa chọn tốt nhất mới.
+
+Kết luận: Khi môi trường luôn thay đổi, việc thăm dò là bắt buộc và phải diễn ra liên tục để không bị "lỗi thời". Đây là trường hợp phổ biến nhất trong thực tế, và là lý do tại sao ε-greedy và các phương pháp có cơ chế thăm dò khác là nền tảng của học tăng cường.
