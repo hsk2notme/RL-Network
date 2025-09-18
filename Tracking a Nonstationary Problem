@@ -1,0 +1,36 @@
+# Tracking a Nonstationary Problem
+
+Problem: Hầu hết những phương pháp trước đó dùng cho trường hợp stationary, xác suất phần thường không
+thay đổi theo thời gian -> không đủ thực tế và kém hoạt động vì thực tế toàn gặp ở trường hợp 
+là không dừng (nonstationary)
+
+=> Cần đặt nhiều trọng số hơn cho các phần thưởng mới xảy ra so với các phần thưởng đã có từ trước đó.
+  -> tham số kích thước bước không đổi là lựa chọn phổ biến.
+
+> Ví dụ 2.3 trong ví dụ => phần mới
+        => Công thức được khai triển sẽ có những thứ mới:
+              Trung bình có trọng số (weighted average) => a(1-a)^(n-i) bám theo số mũ của 1-a.
+              Hiểu đơn giản là cùng với 1 tham số kích thước bước thì số mũ càng lớn thì sức ảnh hưởng
+              của Ri càng thấp => ĐÚNG VỚI THAM CHIẾU BAN ĐẦU
+
+Chúng ta còn có thể thay đổi tham số kích thước bước ở mỗi bước sẽ có kết quả tốt hơn. 
+1. Có "Luật Vàng" để việc học hội tụ một cách đáng tin cậy
+Toán học đã tìm ra 2 điều kiện cụ thể (gọi là điều kiện hội tụ) để đảm bảo rằng một ước tính sẽ ngày càng chính xác và cuối cùng ổn định tại giá trị thực sự. Hãy tưởng tượng việc học giống như một cung thủ đang cố gắng bắn trúng tâm bia. 🎯
+
+2. Hai "Luật Vàng" đó là gì?
+Tổng các bước cập nhật phải là vô hạn 
+  Ý nghĩa: Các bước học không được nhỏ đi quá nhanh đến mức dừng lại giữa chừng.
+  Tương tự cung thủ: Tổng sức mạnh của tất cả các mũi tên phải đủ lớn để có thể bay đến bia, dù ban đầu có bắn lệch đến đâu.
+
+Tổng bình phương của các bước cập nhật phải hữu hạn 
+  Ý nghĩa: Cuối cùng, các bước học phải trở nên đủ nhỏ.
+  Tương tự cung thủ: Những mũi tên cuối cùng phải là những cú "điều chỉnh" nhẹ nhàng để găm vào tâm, chứ không phải những cú bắn hết sức khiến mũi tên liên tục bay sượt qua lại xung quanh bia.
+
+3. Sự đánh đổi quan trọng giữa Lý thuyết và Thực tế
+Phương pháp trung bình mẫu (α = 1/n) thỏa mãn cả hai luật vàng. Về lý thuyết, nó hoàn hảo để tìm ra một mục tiêu cố định (dừng). Tuy nhiên, trong thực tế, nó thường học rất chậm.
+
+Phương pháp kích thước bước không đổi (α = hằng số) vi phạm luật vàng thứ hai. Điều này có nghĩa là nó không bao giờ "ổn định" hoàn toàn.
+
+Đây lại là một ưu điểm: Chính vì không ổn định, nó rất linh hoạt và có thể liên tục theo dõi (track) một mục tiêu di động (không dừng).
+
+Kết luận quan trọng nhất: Trong học tăng cường, vì các bài toán thường là "không dừng" (thế giới luôn thay đổi), nên sự linh hoạt để thích ứng (của phương pháp α không đổi) thường được ưu tiên hơn là sự đảm bảo hội tụ chặt chẽ về mặt lý thuyết.
