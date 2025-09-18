@@ -1,2 +1,34 @@
 ***If k-armed bandit is the problem, action-value is one of the solutions to solve.
 
+  Cách ước tính giá trị thực của một phần thưởng bằng cách lấy trung bình các phần thưởng đã thực sự
+  nhận được: Công thức ... (Phương pháp trung bình mẫu)
+
+Question '?' : How the estimate might be used to select the action
+
+    -> Selecting one of GREEDY ACTIONS: Select one of the highest valued action.
+    or if there is more than one GA, a selection is made among them in some arbitrary ways (cách tùy ý)
+        -> random..
+
+    Công thức: At = argmaxQt(a)
+
+-> Cons: Always exploits current knowledge to maximize initial reward, not use time for checking other
+actions to see if they might really be better (not exploring)
+      => Một vài vấn đề nảy sinh:
+              +> Data ít, chưa đủ nhiều để xác định chính xác giá trị chính xác.
+                 Theo luật số lớn của pp trung bình mẫu thì mẫu số càng tiến đến vô cùng thì giá trị
+                 ước tính càng sát
+              +> Nếu có action tốt nhưng case test không đủ để nó có giá trị cao ngay từ đầu thì sẽ
+                 bị loại bỏ do tính khai thác
+
+==>> Solution: Using Near-greedy action selection (epsilon-greedy) 
+
+      So what is Near-greedy action selection ? 
+            - We still use GA most of the time, but we use the probability epsilon, at the rest of
+            the time, instead select randomly from among all the actions with equal probability, independently 
+            of the action-value estimate. (Đảm bảo việc vẫn chọn được những cái xác suất cao đã có nhưng sẽ có
+            những phần explore thêm về các action khác)
+
+==>> Positive: Phương pháp này gán liền với sự kêt hợp giữa exploit và explore
+               Phục vụ cho hiệu quả dài hạn, đánh giá liên tục để có thể xác định chính xác nhất giá trị ước tính
+               của một action.  
+               Ngoải ra sẽ luôn thử vô hạn lần -> Luật số lớn -> gần với giá trị q*(a) nhất có thể
