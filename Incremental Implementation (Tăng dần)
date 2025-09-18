@@ -1,0 +1,95 @@
+# Các cách triển khai trước khi tìm hiểu sâu về triển khai chi tiết bài toán.
+
+                      Triển khai theo PHƯƠNG PHÁP TĂNG DẦN
+
+Theo công thức đã có với Qn: ước tính giá trị hành động của nó sau khi được chọn n-1 lần
+                         Ri: Phần thưởng nhận được sau lần hành động thứ i
+
+Vấn đề: Phải lặp đi lặp lại công thức đấy -> Tốn bộ nhớ -> hết lưu trữ -> cook
+       => Công thức tăng dần (Incremental formulas) (Đã được chứng minh trong sách)
+
++> Quy tắc cập nhật: 
+
+        New estimate <- Old es + step (Mức độ quan tâm) x [Target - Old es] (A)
+
+Trong đó với A là sai số trong ước tính -> xu hướng giảm bớt khi tiến một bước về phía mục tiêu.
+Trong cuốn sách này, chúng tôi ký hiệu tham số kích thước bước là α hoặc, tổng quát hơn, là αt(a).
+
+Đây là một thuật toán hoàn chỉnh để giải quyết bài toán K-armed Bandit. Nó kết hợp tất cả các ý tưởng chúng ta đã thảo luận: ước tính giá trị bằng trung bình mẫu, cập nhật tăng dần, và lựa chọn hành động theo chính sách ε-greedy.
+
+Bước 1: Khởi tạo (Initialization)
+Initialize, for a = 1 to k:
+  Q(a) <- 0
+  N(a) <- 0
+Mục đích: Thiết lập "bộ não" của tác tử (agent) ở trạng thái ban đầu, trước khi nó có bất kỳ kinh nghiệm nào.
+
+for a = 1 to k:: Lệnh này có nghĩa là chúng ta sẽ thực hiện các bước bên trong cho tất cả k hành động (tất cả các cần gạt).
+
+Q(a) <- 0:
+
+Q(a) là giá trị ước tính (Estimated Value) cho hành động a.
+
+Chúng ta khởi tạo tất cả các giá trị ước tính bằng 0. Điều này thể hiện rằng ban đầu, tác tử không có lý do gì để ưu tiên bất kỳ hành động nào hơn hành động nào; nó hoàn toàn "vô tư".
+
+N(a) <- 0:
+
+N(a) là số lần (Number) hành động a đã được chọn.
+
+Chúng ta khởi tạo bộ đếm này bằng 0 vì tác tử chưa thực hiện bất kỳ hành động nào.
+
+Bước 2: Vòng lặp học tập (Learning Loop)
+Loop forever:
+  ...
+Đây là vòng lặp chính nơi quá trình ra quyết định và học hỏi diễn ra liên tục.
+
+1. Lựa chọn hành động (Action Selection)
+A <- { argmax_a Q(a)   with probability 1 - ε
+     { a random action with probability ε
+Mục đích: Quyết định xem nên kéo cần gạt nào tiếp theo. Đây chính là lúc chính sách ε-greedy được áp dụng.
+
+Tác tử sẽ chọn hành động A tiếp theo của mình theo một trong hai cách:
+
+Với xác suất (1 - ε): Nó sẽ khai thác (exploit). Nó sẽ tìm trong bảng giá trị Q của mình và chọn hành động a có giá trị ước tính Q(a) cao nhất (argmax_a Q(a)).
+
+Với xác suất ε: Nó sẽ thăm dò (explore). Nó sẽ bỏ qua bảng giá trị Q và chọn một hành động ngẫu nhiên bất kỳ từ 1 đến k.
+
+2. Tương tác với môi trường (Interaction)
+R <- bandit(A)
+Mục đích: Thực hiện hành động đã chọn và nhận kết quả từ môi trường.
+
+A là hành động vừa được chọn ở bước trên.
+
+bandit(A) là một hàm đại diện cho "máy đánh bạc". Bạn đưa cho nó hành động A (kéo cần gạt A), và nó trả về một phần thưởng R.
+
+3. Cập nhật (Learning)
+N(A) <- N(A) + 1
+Q(A) <- Q(A) + 1/N(A) * [R - Q(A)]
+Mục đích: Cập nhật lại "niềm tin" của tác tử dựa trên kinh nghiệm vừa có được.
+
+N(A) <- N(A) + 1:
+
+Cập nhật bộ đếm cho hành động A vừa được thực hiện. Chúng ta tăng số lần chọn hành động A lên 1.
+
+Q(A) <- Q(A) + 1/N(A) * [R - Q(A)]:
+
+Đây chính là công thức cập nhật tăng dần mà chúng ta đã phân tích.
+
+Tác tử lấy giá trị ước tính cũ của hành động A, Q(A).
+
+Nó so sánh phần thưởng thực tế R vừa nhận được với giá trị ước tính cũ Q(A) để tính ra "sai số" [R - Q(A)].
+
+Nó cập nhật lại giá trị Q(A) bằng cách dịch chuyển nó một chút (với kích thước bước là 1/N(A)) về phía phần thưởng thực tế R.
+
+Tóm tắt luồng hoạt động
+Vòng lặp này cứ lặp đi lặp lại mãi mãi:
+
+Quyết định: Dựa trên kiến thức hiện tại và một chút ngẫu nhiên (ε-greedy), chọn một hành động.
+
+Hành động: Thực hiện hành động đó trong môi trường.
+
+Quan sát: Nhận về một phần thưởng.
+
+Học hỏi: Cập nhật lại kiến thức (giá trị ước tính) về hành động vừa thực hiện.
+
+Lặp lại.
+              
