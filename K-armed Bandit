@@ -27,12 +27,18 @@ Nongreedy action: The action that not a greedy action.
 like estimates, uncertainties and the number of remaining steps.
 
 Most of these methods make strong assumptions about stationarity (tính dừng - phần thưởng trung bình
-cho mỗi lượt là không thay đổi) and prior knowledge that are either violated or impossible to verify in most applications and in
+cho mỗi lượt là không thay đổi) and prior knowledge (kiến thức tiên nghiệm) that are either violated or impossible to verify in most applications and in
 the full reinforcement learning problem that we consider in subsequent chapters. The
 guarantees of optimality or bounded loss for these methods are of little comfort when the
 assumptions of their theory do not apply
 
-When do we use this position ?
+Bonus: Cơ chế hoạt động của K-A Bandit
+          - Sau ước tính ban đầu về "giá trị" của từng phần tử k, thông qua policy mà agent sẽ đưa ra 
+          action và nhận lại reward. Reward đó đóng vai trò ước tính lại value cho action đã chọn
+          -> Lặp lại vòng này để sau mỗi ước tính Qt(a) sẽ đến gần hơn với giá trị thực q*(a) cần -> đưa ra
+          các lựa chọn tốt nhất
+
+So.... when do we use this position ?
 
 Khi phải lựa chọn giữa nhiều phương án cạnh tranh: 
 Cốt lõi của bài toán là phải chọn ra một trong k lựa chọn có sẵn (ví dụ: các phiên bản quảng cáo, các loại thuốc, các tiêu đề bài báo).
@@ -45,7 +51,7 @@ Khi việc thu thập thông tin tốn chi phí: Cách duy nhất để biết m
 
 Khi các lựa chọn tương đối độc lập và không ảnh hưởng đến trạng thái tương lai: Đây là điểm khác biệt chính so với học tăng cường đầy đủ. Việc chọn quảng cáo A hôm nay không làm thay đổi bản chất của quảng cáo B vào ngày mai. Vấn đề mang tính "phi liên kết" (non-associative), tức là không có khái niệm "trạng thái" phức tạp.
 
-Tóm lại, K-armed Bandit là mô hình lý tưởng cho các bài toán tối ưu hóa lựa chọn trong điều kiện không chắc chắn, nơi tồn tại sự đánh đổi trực tiếp giữa việc khai thác phương án tốt nhất hiện tại và việc thăm dò để tìm ra phương án tốt hơn trong tương lai.
 
 
-          
+
+       
