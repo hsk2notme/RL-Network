@@ -1,6 +1,6 @@
 # Điểm yếu của e-greedy là việc luôn tham dò các hành động ngẫu nhiên
   Không phân biệt được hành động nào có vẻ khá tốt hoặc rất tệ mà chỉ là pick bừa => lãng phí step
- ====>>>>> Nhu cầu cấp thiết là tìm ra cách tham dò hiệu quả và có chiến lược hơn
+ ==>> Nhu cầu cấp thiết là tìm ra cách tham dò hiệu quả và có chiến lược hơn
 
 
   ==> UCB là việc thay vì chúng ta tham dò ngẫu nhiên thì ta sẽ tham dò những hành động có tiềm năng
@@ -10,4 +10,13 @@
    Phân tích công thức:
         +> Phần khai thác: Qt(a) là giá trị của trung bình của hành động a tại thời điểm t
         +> Phần tham dò: Là phần còn lại nó được coi như là phần điểm thưởng cho sự không chắc chắn, đo lường mức 
-                         độ tò mò của chúng ta về một số hành động 
+                         độ tò mò của chúng ta về một số hành động
+              
+        Nt(a) (số lần thử): Nằm ở dưới mẫu số. Đây là yếu tố quan trọng nhất. 
+           Nếu một hành động được thử nhiều lần, Nt(a) sẽ lớn, làm cho cả cụm này nhỏ đi. Tác tử sẽ bớt tò mò về nó.
+           Nếu một hành động được thử ít lần (hoặc chưa thử), Nt(a) sẽ nhỏ, làm cho cả cụm này lớn lên. Nó nhận được một "điểm thưởng" lớn vì sự bí ẩn, khuyến khích tác tử thử nó.
+
+        lnt (thời gian): Nằm ở trên tử số. Khi thời gian trôi qua, t tăng lên. 
+        Điều này làm cho tất cả các hành động dần trở nên "đáng tò mò" hơn một chút, đảm bảo rằng tác tử không bao giờ ngừng thăm dò hoàn toàn.
+
+        c (hệ số thăm dò): Là một số dương bạn tự chọn. c càng lớn, tác tử càng "thích phiêu lưu" và ưu tiên thăm dò hơn.    
