@@ -1,0 +1,36 @@
+# Chúng ta có thể thấy rõ rằng những phương pháp trước đây là đều bám vào action-valued Q1(a)
+   => có sự thiên vị bằng các ước tính ban đầu
+
+
+==>> Dùng OIV (Optimistic Initial Values) để khuyến khích sự tham dò, không dựa vào phần chọn ngẫu
+nhiên như hệ số epsilon-greedy (Tức là tập trung cách thiết lập giá trị ước tính ban đầu cho tác tử)
+
+*** Cách triển khai như sau:
+      1. Khởi tạo một giá trị cao hơn mức bình thường nó có một cách phi thực tế -> Để cho thấy mọi 
+         thứ đều cực kỳ tốt.
+      2. Tác tử tham lam chọn một hành động bất kì -> nhận thấy giá trị thấp hơn giá trị đã có trong phần 
+         khởi động
+      3. Cập nhật lại Q(A) -> thất vọng
+      4. Nhìn về mấy hành động còn lại điểm vẫn như vậy -> do tham lam -> lấy tiếp hành động còn nguyên điểm
+         để làm tiếp 
+
+    => Vòng lặp tiếp tục -> thử qua các hành động ít nhất 1 vài lần =>> case tham dò hợp lí trong giai 
+    đoạn đầu
+
+ĐIỂM YẾU CHÍ MẠNG CỦA OIV:
+
+Trong bối cảnh bài toán này (phần thưởng thường < 2), việc nhận được một phần thưởng R > 5 là một sự kiện cực kỳ "may mắn" và hiếm gặp. Tuy nhiên, nếu nó xảy ra, đây là điều sẽ diễn ra:
+
+Giả sử tất cả Q ban đầu là 5. Tác tử thử hành động A và nhận được một phần thưởng may mắn đến khó tin là R = 6.
+
+Tác tử cập nhật giá trị của A:
+Q_mới(A) = Q_cũ(A) + α * [R - Q_cũ(A)] = 5 + α * [6 - 5].
+Vì α > 0, kết quả Q_mới(A) chắc chắn sẽ lớn hơn 5 (ví dụ: 5.1 nếu α = 0.1).
+
+Bước đi tiếp theo: Tác tử nhìn vào "bảng điểm" của mình. Nó thấy Q(A) = 5.1, trong khi tất cả các hành động khác vẫn là 5.
+
+Hậu quả: Vì là một tác tử tham lam (ε=0), nó sẽ luôn chọn hành động có Q cao nhất. Từ thời điểm này, nó sẽ chọn hành động A mãi mãi.
+
+Kết luận: Nếu tác tử nhận được một phần thưởng may mắn vượt quá mức lạc quan ban đầu, cơ chế thăm dò của OIV sẽ thất bại. Tác tử sẽ bị "mắc kẹt sớm" vào hành động đó mà không bao giờ thử các lựa chọn còn lại. Đây chính là rủi ro khi sử dụng một mẹo dựa trên sự "thất vọng": một sự "thỏa mãn" bất ngờ sẽ phá vỡ nó.
+
+      
