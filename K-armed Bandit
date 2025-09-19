@@ -40,16 +40,7 @@ Bonus: Cơ chế hoạt động của K-A Bandit
 
 So.... when do we use this position ?
 
-Khi phải lựa chọn giữa nhiều phương án cạnh tranh: 
-Cốt lõi của bài toán là phải chọn ra một trong k lựa chọn có sẵn (ví dụ: các phiên bản quảng cáo, các loại thuốc, các tiêu đề bài báo).
 
-Khi kết quả của mỗi lựa chọn là không chắc chắn: Bạn không biết chắc chắn phần thưởng nhận được mỗi khi lựa chọn là bao nhiêu, nó tuân theo một phân phối xác suất nào đó mà bạn phải tìm hiểu.
-
-Khi cần tối ưu hóa kết quả theo thời gian: Mục tiêu không phải là tìm ra lựa chọn tốt nhất trong một lần duy nhất, mà là tối đa hóa tổng lợi ích thu được qua một chuỗi các quyết định.
-
-Khi việc thu thập thông tin tốn chi phí: Cách duy nhất để biết một lựa chọn tốt hay không là phải thử nó. Mỗi lần "thử" (thăm dò) một lựa chọn không tối ưu, bạn sẽ mất đi một khoản lợi ích mà lẽ ra bạn có được nếu chọn phương án tốt nhất đã biết (khai thác). Đây chính là "chi phí" của việc học hỏi.
-
-Khi các lựa chọn tương đối độc lập và không ảnh hưởng đến trạng thái tương lai: Đây là điểm khác biệt chính so với học tăng cường đầy đủ. Việc chọn quảng cáo A hôm nay không làm thay đổi bản chất của quảng cáo B vào ngày mai. Vấn đề mang tính "phi liên kết" (non-associative), tức là không có khái niệm "trạng thái" phức tạp.
 
 
 
