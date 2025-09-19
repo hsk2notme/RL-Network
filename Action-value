@@ -28,7 +28,10 @@ actions to see if they might really be better (not exploring)
             of the action-value estimate. (Đảm bảo việc vẫn chọn được những cái xác suất cao đã có nhưng sẽ có
             những phần explore thêm về các action khác)
 
-==>> Positive: Phương pháp này gán liền với sự kêt hợp giữa exploit và explore
-               Phục vụ cho hiệu quả dài hạn, đánh giá liên tục để có thể xác định chính xác nhất giá trị ước tính
-               của một action.  
-               Ngoải ra sẽ luôn thử vô hạn lần -> Luật số lớn -> gần với giá trị q*(a) nhất có thể
+==>> Positive: 
+
+Cân bằng thông minh: Nó không chỉ "tham lam" chọn cái tốt nhất đã biết, mà còn dành một phần nhỏ cơ hội để thăm dò những lựa chọn mới, tránh bỏ lỡ các cơ hội vàng. 🧠
+
+Hướng tới chiến thắng dài hạn: Nó chấp nhận hy sinh một chút lợi ích trước mắt để học hỏi, với mục tiêu tìm ra chiến lược mang lại tổng phần thưởng cao nhất về lâu dài. 🏆
+
+Không bị "mắc kẹt": Bằng cách đảm bảo mọi lựa chọn đều được thử qua, nó chắc chắn sẽ học được giá trị thực sự của mỗi hành động và không bị mắc kẹt vào một quyết định sai lầm ban đầu.
