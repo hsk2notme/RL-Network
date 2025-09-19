@@ -1,0 +1,47 @@
+# Cách tiếp cận hoàn toàn khác với các phương pháp action-valued.
+
+      Cách tiếp cận của AV: tìm kiếm hành động của nó và trung bình mang lại phần thưởng là bao nhiêu
+      Cách tiếp cận của GB: Ưu tiên vào sở thích và mức độ ưu tiên của tác tử và trả về một điểm số là H(a)
+              -> H(a) khác với Q(a) chỉ là điểm ưu tiên cho hành động mong muốn làm, không phải là điểm của hành động sau
+                 khi thực hiện.
+
+      => Ta có phân phối soft-max (Gibbs/Boltzmann): Là hàm toán học chuyển đổi các điểm số H(a) thành phân phối xác suất
+                Về căn bản, phân phối soft-max sẽ chọn hành động dựa trên xác suất, hành động nào có sở thích
+                cao hơn thì xác suất được chọn cũng sẽ cao hơn.
+
+        Dựa theo công thức, phân tích như sau: pi: Chính sách/xác suất hành động của sự kiện
+                                              Tên gọi: Trọng số chưa chuẩn hóa hoặc có thể hiểu là "Sức mạnh/Số phiếu bầu".
+
+                                              Định nghĩa: Là kết quả của việc lấy lũy thừa cơ số e với số mũ là điểm sở thích Ht(a).
+
+                                              Diễn giải:
+                                              Đây là một bước trung gian để biến điểm "sở thích" (có thể là số âm) thành một số dương đại diện cho "sức mạnh" hay "tầm quan trọng" của hành động đó.
+                                              Hành động có sở thích cao hơn sẽ có "sức mạnh" lớn hơn theo hàm mũ. Nó giống như việc một ứng cử viên có uy tín cao sẽ nhận được nhiều "phiếu bầu" hơn trong một cuộc bầu cử.
+
+ +> Như vậy thì chúng ta sẽ cập nhật xác suất như thế nào khi mà việc chọn theo sở thích vẫn sẽ
+    trả về các giá trị phần thưởng ?
+
+        Hiểu cơ bản như sau: Dựa vào phần xác suất ban đầu mà chọn được một hành động tương ứng
+        Nó sẽ trả lại một phần thưởng, dựa vào phần thưởng ấy thì ta sẽ set up lại xác suất chọn 
+
+               Nếu R_t > R̄_t -> Kết quả tốt hơn mong đợi.
+
+               Nếu R_t < R̄_t -> Kết quả tệ hơn mong đợi.
+
+        - Cập nhật sở thích:
+
+              - Nếu kết quả TỐT HƠN mong đợi:
+
+                     +> Tăng sở thích cho hành động vừa được chọn.
+
+                     +> Giảm sở thích cho TẤT CẢ các hành động khác.
+
+              - Nếu kết quả TỆ HƠN mong đợi:
+
+                     +> Giảm sở thích cho hành động vừa được chọn.
+
+                     +> Tăng sở thích cho TẤT CẢ các hành động khác.
+            
+    Công thức như sau: 
+                
+               
