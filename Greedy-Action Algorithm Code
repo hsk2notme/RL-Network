@@ -1,0 +1,130 @@
+#include <iostream>
+#include <vector>
+#include <cstdlib> // Cho rand(), srand()
+#include <ctime>   // Cho time()
+#include <cmath>   
+
+// --- HÀM HỖ TRỢ ---
+
+// Hàm tạo số ngẫu nhiên theo phân phối chuẩn (Box-Muller transform)
+double random(double mean, double stddev) {
+    static bool has_spare = false;
+    static double spare;
+
+    if (has_spare) {
+        has_spare = false;
+        return mean + stddev * spare;
+    }
+
+    has_spare = true;
+    double u, v, s;
+    do {
+        u = ((double)rand() / RAND_MAX) * 2.0 - 1.0;
+        v = ((double)rand() / RAND_MAX) * 2.0 - 1.0;
+        s = u * u + v * v;
+    } while (s >= 1.0 || s == 0.0);
+    
+    s = sqrt(-2.0 * log(s) / s);
+    spare = v * s;
+    return mean + stddev * u * s;
+}
+
+// --- LỚP MÔI TRƯỜNG ---
+class BanditTestbed {
+public:
+    int k;
+    std::vector<double> true_values;
+
+    // Hàm khởi tạo môi trường
+    BanditTestbed(int num_arms) {
+        k = num_arms;
+        true_values.resize(k);
+        for (int i = 0; i < k; ++i) {
+            // Giá trị thật q*(a) được lấy từ phân phối chuẩn N(0, 1)
+            true_values[i] = random(0.0, 1.0);
+        }
+    }
+
+    // Hàm trả về phần thưởng khi agent hành động
+    double get_reward(int action) {
+        // Phần thưởng được lấy từ phân phối chuẩn N(q*(action), 1)
+        return random(true_values[action], 1.0);
+    }
+    
+    // Hàm tìm hành động tốt nhất thực sự
+    int get_optimal_action() {
+        int best_action = 0;
+        for (int i = 1; i < k; ++i) {
+            if (true_values[i] > true_values[best_action]) {
+                best_action = i;
+            }
+        }
+        return best_action;
+    }
+};
+
+
+int main() {
+    // --- CÀI ĐẶT THÍ NGHIỆM ---
+    const int K = 10;
+    const int NUM_STEPS = 1000;
+    const int NUM_RUNS = 2000;
+
+    // Gieo mầm cho bộ tạo số ngẫu nhiên chỉ một lần
+    srand(time(0)); 
+
+    // Mảng vector để lưu kết quả trung bình
+    std::vector<double> average_rewards(NUM_STEPS, 0.0);
+    std::vector<double> optimal_action_percent(NUM_STEPS, 0.0);
+
+    // --- VÒNG LẶP CHẠY LIÊN HOÀN ---
+    for (int run = 0; run < NUM_RUNS; ++run) {
+        if ((run + 1) % 100 == 0) {
+            std::cout << "Dang chay luot: " << run + 1 << "/" << NUM_RUNS << std::endl;
+        }
+
+        // 1. Tạo môi trường mới cho mỗi lượt chạy
+        BanditTestbed testbed(K);
+        int optimal_action = testbed.get_optimal_action();
+
+        // 2. Khởi tạo "bộ não" của Agent
+        std::vector<double> Q(K, 0.0); // Bảng điểm ước tính
+        std::vector<double> N(K, 0.0); // Bảng đếm
+
+        // --- VÒNG LẶP HỌC TẬP CỦA AGENT ---
+        for (int step = 0; step < NUM_STEPS; ++step) {
+            
+            // a. Ra quyết định (Logic Greedy)
+            int action_to_take = 0;
+            for (int i = 1; i < K; ++i) {
+                if (Q[i] > Q[action_to_take]) {
+                    action_to_take = i;
+                }
+            }
+
+            // b. Tương tác
+            double reward = testbed.get_reward(action_to_take);
+
+            // c. Học hỏi
+            N[action_to_take]++;
+            Q[action_to_take] += (1.0 / N[action_to_take]) * (reward - Q[action_to_take]);
+
+            // d. Ghi lại kết quả
+            average_rewards[step] += reward;
+            if (action_to_take == optimal_action) {
+                optimal_action_percent[step]++;
+            }
+        }
+    }
+
+    // --- TÍNH TRUNG BÌNH VÀ IN KẾT QUẢ ---
+    std::cout << "\n--- Ket qua trung binh sau " << NUM_RUNS << " luot chay ---\n";
+    std::cout << "Step,AverageReward,OptimalActionPercentage\n";
+    for (int i = 0; i < NUM_STEPS; ++i) {
+        average_rewards[i] /= NUM_RUNS;
+        optimal_action_percent[i] = (optimal_action_percent[i] / NUM_RUNS) * 100.0;
+        std::cout << i + 1 << "," << average_rewards[i] << "," << optimal_action_percent[i] << "\n";
+    }
+
+    return 0;
+}
