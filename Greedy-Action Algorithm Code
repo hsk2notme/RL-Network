@@ -29,23 +29,21 @@ double random(double mi, double sigma) {
     return mi + sigma * x * A;
 }
 
-// --- LỚP MÔI TRƯỜNG ---
-class BanditTestbed {
+
+class Testbed {
 public:
     int k;
     vector<double> true_values;
 
     // Hàm khởi tạo môi trường
-    BanditTestbed(int nums_action) {
+    Testbed(int nums_action) {
         k = nums_action;
         true_values.resize(k); // 
         for (int i = 0; i < k; ++i) {
-        // Giá trị thật q*(a) được lấy từ phân phối chuẩn N(0, 1)
-            true_values[i] = random(0.0, 1.0);
+            true_values[i] = random(0.0, 1.0);  // Giá trị thật q*(a) được lấy từ phân phối chuẩn N(0, 1)
         }
     }
 
-    // Hàm trả về phần thưởng khi agent hành động
     double get_reward(int action) {
         return random(true_values[action], 1.0);
     }
@@ -78,7 +76,7 @@ int main() {
     // --- VÒNG LẶP CHẠY LIÊN HOÀN ---
     for (int run = 0; run < NUM_RUNS; ++run) {
 
-        BanditTestbed solieu(k);
+        Testbed solieu(k);
         int optimal_action = solieu.get_optimal_action();
 
         vector<double> Q(k, 0.0); // Bảng điểm ước tính
