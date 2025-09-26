@@ -35,7 +35,6 @@ public:
     int k;
     vector<double> true_values;
 
-    // Hàm khởi tạo môi trường
     Testbed(int nums_action) {
         k = nums_action;
         true_values.resize(k); // 
@@ -48,7 +47,7 @@ public:
         return random(true_values[action], 1.0);
     }
     
-    // Hàm tìm hành động tốt nhất thực sự
+
     int get_optimal_action() {
         int best_action = 0;
         for (int i = 1; i < k; ++i) {
@@ -66,10 +65,8 @@ int main() {
     int NUM_STEPS; cin >> NUM_STEPS >> "\n";
     int NUM_RUNS;  cin >> NUM_RUNS >> "\n";
 
-    // Gieo mầm cho bộ tạo số ngẫu nhiên chỉ một lần
     srand(time(0)); 
 
-    // Mảng vector để lưu kết quả trung bình
     vector<double> average_rewards(NUM_STEPS, 0.0);
     vector<double> optimal_action_percent(NUM_STEPS, 0.0);
 
@@ -116,3 +113,6 @@ int main() {
 
     return 0;
 }
+
+
+// Link sơ đồ thuật toán: https://drive.google.com/file/d/1R01NEzQuWO4koLzqoGue-4RW0WgayBuv/view?usp=sharing
