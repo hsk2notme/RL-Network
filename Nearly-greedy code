@@ -41,9 +41,7 @@ public:
         }
     }
 
-    // Agent đưa vào một hành động, môi trường trả về phần thưởng
     double get_reward(int action) {
-        // Phần thưởng ngẫu nhiên xoay quanh giá trị thật của hành động đó
         return random(true_values[action], 1.0);
     }
 };
