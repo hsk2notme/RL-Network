@@ -62,8 +62,8 @@ public:
 
 int main() {
     int k; cin >> k >> "\n";
-    int NUM_STEPS; cin >> NUM_STEPS >> "\n";
-    int NUM_RUNS;  cin >> NUM_RUNS >> "\n";
+    const int NUM_STEPS = 1000;
+    const int NUM_RUNS = 2000;
 
     srand(time(0)); 
 
