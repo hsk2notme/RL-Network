@@ -47,28 +47,26 @@ public:
 };
 
 // --- HÀM CHẠY THÍ NGHIỆM ---
-vector<double> run_epsilon_greedy_experiment(int k, int num_steps, int num_runs, double epsilon) {
+vector<double> epsilon_greedy(int k, int num_steps, int num_runs, double epsilon) {
     vector<double> average_rewards(num_steps, 0.0);
 
-    // Vòng lặp ngoài: Lặp lại toàn bộ thí nghiệm num_runs lần
-    for (int run = 0; run < num_runs; ++run) {
+    for (int i = 0; i < num_runs; ++i) {
         BanditTestbed testbed(k); // Tạo môi trường mới
         vector<double> Q(k, 0.0);  // Reset "bộ não" agent
         vector<double> N(k, 0.0);
 
         // Vòng lặp trong: Một "cuộc đời" của agent
-        for (int step = 0; step < num_steps; ++step) {
+        for (int j = 0; j < num_steps; ++j) {
             int action_to_take;
 
             // --- LOGIC CỐT LÕI CỦA EPSILON-GREEDY ---
             if (((double)rand() / RAND_MAX) < epsilon) {
-                // Thăm dò: Chọn hành động ngẫu nhiên
                 action_to_take = rand() % k;
             } else {
                 // Khai thác: Chọn hành động có điểm Q cao nhất
                 action_to_take = 0;
-                for (int i = 1; i < k; ++i) {
-                    if (Q[i] > Q[action_to_take]) {
+                for (int action = 1; action < k; ++action) {
+                    if (Q[action] > Q[action_to_take]) {
                         action_to_take = i;
                     }
                 }
