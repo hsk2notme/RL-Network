@@ -99,29 +99,24 @@ int main() {
     // Gieo mầm ngẫu nhiên chỉ một lần
     srand(time(0)); 
 
-    // Các tham số cố định cho thí nghiệm
-    const int K = 10;
+    int k; cout << "Nhap so luong hanh dong: "; cin >> k >> "\n";
     const int NUM_STEPS = 1000;
     const int NUM_RUNS = 2000;
 
-    // Vòng lặp tương tác với người dùng
     while (true) {
-        double epsilon_to_test;
-        cout << "\n>>> Nhap gia tri epsilon de thu nghiem (hoac nhap so am de thoat): ";
-        cin >> epsilon_to_test;
-
-        // Điều kiện để thoát chương trình
-        if (epsilon_to_test < 0) {
-            cout << "Thoat chuong trinh." << endl;
+        double epsilon;
+        cout << " Nhap gia tri epsilon: ";
+        cin >> epsilon;
+        if (epsilon < 0 || epsilon > 1) {
+            cout << "Khong phu hop voi bai toan. Thoat chuong trinh." << endl;
             break; 
         }
 
-        // Chạy thí nghiệm với epsilon vừa nhập
-        cout << "Dang chay thi nghiem voi epsilon = " << epsilon_to_test << "..." << endl;
-        vector<double> results = run_epsilon_greedy_experiment(K, NUM_STEPS, NUM_RUNS, epsilon_to_test);
+        cout << "Dang chay thi nghiem voi epsilon = " << epsilon << "..." << endl;
+        vector<double> results = run_epsilon_greedy_experiment(k, NUM_STEPS, NUM_RUNS, epsilon);
 
         // In kết quả của thí nghiệm này ra màn hình
-        cout << "--- Ket qua cho Epsilon = " << epsilon_to_test << " ---\n";
+        cout << "Ket qua cho Epsilon = " << epsilon << " ---\n";
         cout << "Step,AverageReward\n";
         for (int i = 0; i < NUM_STEPS; ++i) {
             cout << i + 1 << "," << results[i] << "\n";
