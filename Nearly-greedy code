@@ -37,7 +37,7 @@ public:
         k = num_actions;
         true_values.resize(k);
         for (int i = 0; i < k; ++i) {
-            true_values[i] = random(0.0, 1.0); // Gán giá trị thật ngẫu nhiên
+            true_values[i] = random(0.0, 1.0); 
         }
     }
 
@@ -46,13 +46,12 @@ public:
     }
 };
 
-// --- HÀM CHẠY THÍ NGHIỆM ---
 vector<double> epsilon_greedy(int k, int num_steps, int num_runs, double epsilon) {
     vector<double> average_rewards(num_steps, 0.0);
 
     for (int i = 0; i < num_runs; ++i) {
-        BanditTestbed testbed(k); // Tạo môi trường mới
-        vector<double> Q(k, 0.0);  // Reset "bộ não" agent
+        BanditTestbed testbed(k); 
+        vector<double> Q(k, 0.0);  
         vector<double> N(k, 0.0);
 
         for (int j = 0; j < num_steps; ++j) {
