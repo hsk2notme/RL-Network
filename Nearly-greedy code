@@ -55,24 +55,19 @@ vector<double> epsilon_greedy(int k, int num_steps, int num_runs, double epsilon
         vector<double> Q(k, 0.0);  // Reset "bộ não" agent
         vector<double> N(k, 0.0);
 
-        // Vòng lặp trong: Một "cuộc đời" của agent
         for (int j = 0; j < num_steps; ++j) {
             int action_to_take;
-
-            // --- LOGIC CỐT LÕI CỦA EPSILON-GREEDY ---
             if (((double)rand() / RAND_MAX) < epsilon) {
                 action_to_take = rand() % k;
             } else {
-                // Khai thác: Chọn hành động có điểm Q cao nhất
                 action_to_take = 0;
                 for (int action = 1; action < k; ++action) {
                     if (Q[action] > Q[action_to_take]) {
-                        action_to_take = i;
+                        action_to_take = action;
                     }
                 }
             }
             
-            // Tương tác với môi trường và học hỏi
             double reward = testbed.get_reward(action_to_take);
             N[action_to_take]++;
             Q[action_to_take] += (1.0 / N[action_to_take]) * (reward - Q[action_to_take]);
@@ -82,7 +77,6 @@ vector<double> epsilon_greedy(int k, int num_steps, int num_runs, double epsilon
         }
     }
 
-    // Tính trung bình cuối cùng sau khi đã chạy hết num_runs
     for (int i = 0; i < num_steps; ++i) {
         average_rewards[i] /= num_runs;
     }
@@ -90,11 +84,9 @@ vector<double> epsilon_greedy(int k, int num_steps, int num_runs, double epsilon
     return average_rewards;
 }
 
-// --- HÀM ĐIỀU KHIỂN CHÍNH ---
-int main() {
-    // Gieo mầm ngẫu nhiên chỉ một lần
-    srand(time(0)); 
 
+int main() {
+    srand(time(0)); 
     int k; cout << "Nhap so luong hanh dong: "; cin >> k >> "\n";
     const int NUM_STEPS = 1000;
     const int NUM_RUNS = 2000;
@@ -109,7 +101,7 @@ int main() {
         }
 
         cout << "Dang chay thi nghiem voi epsilon = " << epsilon << "..." << endl;
-        vector<double> results = run_epsilon_greedy_experiment(k, NUM_STEPS, NUM_RUNS, epsilon);
+        vector<double> results = epsilon_greedy(k, NUM_STEPS, NUM_RUNS, epsilon);
 
         // In kết quả của thí nghiệm này ra màn hình
         cout << "Ket qua cho Epsilon = " << epsilon << " ---\n";
