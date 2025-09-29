@@ -70,8 +70,6 @@ vector<double> epsilon_greedy(int k, int num_steps, int num_runs, double epsilon
             double reward = testbed.get_reward(action_to_take);
             N[action_to_take]++;
             Q[action_to_take] += (1.0 / N[action_to_take]) * (reward - Q[action_to_take]);
-            
-            // Cộng dồn kết quả để tính trung bình sau này
             average_rewards[step] += reward;
         }
     }
