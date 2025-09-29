@@ -46,7 +46,8 @@ public:
     }
 };
 
-vector<double> 
+vector<double> point(int k, double alpha){
+            
 
 
 
